@@ -47,6 +47,19 @@ func (dict *Dictionary) TotalFreq() float64 {
 	return dict.totalFreq
 }
 
+// grow reserves exact room for n more tokens,
+// avoiding the append growth slack on big dictionaries
+func (dict *Dictionary) grow(n int) {
+	need := len(dict.Tokens) + n
+	if need <= cap(dict.Tokens) {
+		return
+	}
+
+	tokens := make([]Token, len(dict.Tokens), need)
+	copy(tokens, dict.Tokens)
+	dict.Tokens = tokens
+}
+
 // AddToken add a token to the dictionary
 func (dict *Dictionary) AddToken(token Token) error {
 	bytes := textSliceToBytes(token.text)

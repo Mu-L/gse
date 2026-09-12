@@ -53,6 +53,12 @@ type Segmenter struct {
 	// SkipPos skip PosStr pos
 	SkipPos bool
 
+	// SkipSubSeg skip calculating the sub-segments of the dictionary tokens,
+	// they are only used by the search mode (Token.Segments and the
+	// searchMode of Slice, String, Pos, CutSearch); set before loading the
+	// dictionary to save about a quarter of the dictionary memory
+	SkipSubSeg bool
+
 	NotStop bool
 	// StopWordMap the stop word map
 	StopWordMap map[string]bool

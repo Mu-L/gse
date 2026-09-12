@@ -1,8 +1,8 @@
 module github.com/go-ego/gse
 
-go 1.25
+go 1.24
 
 require (
-	github.com/vcaesar/cedar v0.30.0
-	github.com/vcaesar/tt v0.30.0
+	github.com/vcaesar/cedar v0.50.0
+	github.com/vcaesar/tt v0.40.0
 )

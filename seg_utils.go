@@ -16,7 +16,6 @@
 package gse
 
 import (
-	"bytes"
 	"fmt"
 )
 
@@ -180,12 +179,16 @@ func textSliceByteLen(text []Text) (length int) {
 }
 
 func textSliceToBytes(text []Text) []byte {
-	var buf bytes.Buffer
-	for _, word := range text {
-		buf.Write(word)
+	if len(text) == 1 {
+		return text[0]
 	}
 
-	return buf.Bytes()
+	buf := make([]byte, 0, textSliceByteLen(text))
+	for _, word := range text {
+		buf = append(buf, word...)
+	}
+
+	return buf
 }
 
 // Join is better string splicing

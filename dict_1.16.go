@@ -31,7 +31,9 @@ func NewEmbed(dict ...string) (seg Segmenter, err error) {
 }
 
 func (seg *Segmenter) loadZh() error {
-	return seg.LoadDictStr(zhS + zhT)
+	seg.loadDictStr(zhS, zhT)
+	seg.CalcToken()
+	return nil
 }
 
 func (seg *Segmenter) loadZhST(d string) (begin int, err error) {
@@ -92,43 +94,64 @@ func (seg *Segmenter) LoadDictEmbed(dict ...string) (err error) {
 
 // LoadDictStr load the dictionary from dict path
 func (seg *Segmenter) LoadDictStr(dict string) error {
+	seg.loadDictStr(dict)
+	seg.CalcToken()
+	return nil
+}
+
+// loadDictStr adds the dict tokens without calculating the token segments.
+// The dicts are not concatenated: the token pos strings are substrings of
+// the dict, so a concatenated copy would stay alive with the dictionary.
+func (seg *Segmenter) loadDictStr(dicts ...string) {
 	if seg.Dict == nil {
 		seg.Dict = NewDict()
 		seg.Init()
 	}
 
-	arr := strings.Split(dict, "\n")
-	for i := 0; i < len(arr); i++ {
-		s1 := strings.Split(arr[i], seg.DictSep+" ")
-		size := len(s1)
-		if size == 0 {
-			continue
-		}
-		text := strings.TrimSpace(s1[0])
+	lines := 0
+	for _, dict := range dicts {
+		lines += strings.Count(dict, "\n") + 1
+	}
+	seg.Dict.grow(lines)
 
-		freqText := ""
-		if len(s1) > 1 {
-			freqText = strings.TrimSpace(s1[1])
-		}
+	sep := seg.DictSep + " "
+	for _, dict := range dicts {
+		for {
+			line, rest, more := strings.Cut(dict, "\n")
+			size, text, freqText, pos := splitDictLine(line, sep)
+			text = strings.TrimSpace(text)
+			freq := seg.Size(size, text, strings.TrimSpace(freqText))
+			if freq != 0.0 {
+				// add the words to the token
+				words := seg.SplitTextToWords([]byte(text))
+				token := Token{text: words, freq: freq, pos: strings.TrimSpace(pos)}
+				seg.Dict.AddToken(token)
+			}
 
-		freq := seg.Size(size, text, freqText)
-		if freq == 0.0 {
-			continue
+			if !more {
+				break
+			}
+			dict = rest
 		}
+	}
+}
 
-		pos := ""
-		if size > 2 {
-			pos = strings.TrimSpace(strings.Trim(s1[2], "\n"))
-		}
-
-		// add the words to the token
-		words := seg.SplitTextToWords([]byte(text))
-		token := Token{text: words, freq: freq, pos: pos}
-		seg.Dict.AddToken(token)
+// splitDictLine splits a dict line into its first three fields without
+// allocating, size is the number of fields found (capped at 3)
+func splitDictLine(line, sep string) (size int, text, freqText, pos string) {
+	var ok bool
+	text, line, ok = strings.Cut(line, sep)
+	if !ok {
+		return 1, text, "", ""
 	}
 
-	seg.CalcToken()
-	return nil
+	freqText, line, ok = strings.Cut(line, sep)
+	if !ok {
+		return 2, text, freqText, ""
+	}
+
+	pos, _, _ = strings.Cut(line, sep)
+	return 3, text, freqText, pos
 }
 
 // LoadTFIDFDictStr load the TFIDF dictionary from dict path
@@ -138,30 +161,28 @@ func (seg *Segmenter) LoadTFIDFDictStr(dictFile *types.LoadDictFile) error {
 		seg.Init()
 	}
 
-	arr := strings.Split(dictFile.FilePath, "\n")
-	for i := 0; i < len(arr); i++ {
-		s1 := strings.Split(arr[i], seg.DictSep+" ")
-		size := len(s1)
-		if size == 0 {
-			continue
-		}
-		text := strings.TrimSpace(s1[0])
+	dict := dictFile.FilePath
+	seg.Dict.grow(strings.Count(dict, "\n") + 1)
+	sep := seg.DictSep + " "
+	for {
+		line, rest, more := strings.Cut(dict, "\n")
+		size, text, freqText, inverseFreqText := splitDictLine(line, sep)
+		text = strings.TrimSpace(text)
 		// frequency
-		freqText := strings.TrimSpace(s1[1])
-		freq := seg.Size(size, text, freqText)
-		if freq == 0.0 {
-			continue
-		}
+		freq := seg.Size(size, text, strings.TrimSpace(freqText))
 		// invserse frequency
-		inverseFreqText := strings.Trim(s1[2], "\n")
 		inverseFreq := seg.Size(size, text, inverseFreqText)
-		if inverseFreq == 0.0 {
-			continue
+		if freq != 0.0 && inverseFreq != 0.0 {
+			// add the words to the token
+			words := seg.SplitTextToWords([]byte(text))
+			token := Token{text: words, freq: freq, inverseFreq: inverseFreq}
+			seg.Dict.AddToken(token)
 		}
-		// add the words to the token
-		words := seg.SplitTextToWords([]byte(text))
-		token := Token{text: words, freq: freq, inverseFreq: inverseFreq}
-		seg.Dict.AddToken(token)
+
+		if !more {
+			break
+		}
+		dict = rest
 	}
 
 	seg.CalcToken()

@@ -1,4 +1,4 @@
-github.com/vcaesar/cedar v0.30.0 h1:9fSDpM7FTjjUdPiBUUa0MWYMRGSEcqgFXvppZcZ4d7Y=
-github.com/vcaesar/cedar v0.30.0/go.mod h1:lyuGvALuZZDPNXwpzv/9LyxW+8Y6faN7zauFezNsnik=
-github.com/vcaesar/tt v0.30.0 h1:rjhUUL6q0+dWBNw6Qi9dTfY4vxQVgPGRLdH7jeKW1A4=
-github.com/vcaesar/tt v0.30.0/go.mod h1:cH2+AwGAJm19Wa6xvEa+0r+sXDJBT0QgNQey6mwqLeU=
+github.com/vcaesar/cedar v0.50.0 h1:eNTViTwbdqa5hC6XrV6rpCILf7Yzyi/Z6dk9f6BiXiA=
+github.com/vcaesar/cedar v0.50.0/go.mod h1:eHvpmJXJmOowP8mW/Xqjra+HmKovJNcRxRPtezHjh7I=
+github.com/vcaesar/tt v0.40.0 h1:vWUNRJn13ozP3xXlAXV5q9WivaDSHRS2jQ2J2ayCvQs=
+github.com/vcaesar/tt v0.40.0/go.mod h1:cH2+AwGAJm19Wa6xvEa+0r+sXDJBT0QgNQey6mwqLeU=

@@ -667,6 +667,10 @@ func (seg *Segmenter) CalcToken() {
 
 	// Each word segmentation is carefully divided for search engine mode,
 	// For the usage of this mode, see the comments of the Token structure.
+	if seg.SkipSubSeg {
+		return
+	}
+
 	for i := range seg.Dict.Tokens {
 		token := &seg.Dict.Tokens[i]
 		segments := seg.segmentWords(token.text, true)

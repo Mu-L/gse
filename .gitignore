@@ -11,6 +11,8 @@ data/dict/zh/dictionary.txt
 
 vendor
 # vendor/github.com/vcaesar/tt
+.v0
+.codg
 
 # Debug files
 *.dSYM/
