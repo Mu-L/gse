@@ -1,7 +1,7 @@
 # gse
 
 Go による効率的な多言語 NLP およびテキスト分割ライブラリ。英語、中国語、日本語などをサポートします。
-[elasticsearch](https://github.com/vcaesar/go-gse-elastic) と [bleve](https://github.com/vcaesar/gse-bleve) もサポートしています。
+[riot](https://github.com/vcaesar/riot)、[zincsearch](https://github.com/zincsearch/zincsearch)、[elasticsearch](https://github.com/vcaesar/go-gse-elastic)、[bleve](https://github.com/vcaesar/gse-bleve) との連携もサポートしています。
 
 <!--<img align="right" src="https://raw.githubusercontent.com/go-ego/ego/master/logo.jpg">-->
 <!--<a href="https://circleci.com/gh/go-ego/ego/tree/dev"><img src="https://img.shields.io/circleci/project/go-ego/ego/dev.svg" alt="Build Status"></a>-->
@@ -17,9 +17,11 @@ Go による効率的な多言語 NLP およびテキスト分割ライブラリ
 <!-- [![Release](https://github-release-version.herokuapp.com/github/go-ego/gse/release.svg?style=flat)](https://github.com/go-ego/gse/releases/latest) -->
 <!--<a href="https://github.com/go-ego/ego/releases"><img src="https://img.shields.io/badge/%20version%20-%206.0.0%20-blue.svg?style=flat-square" alt="Releases"></a>-->
 
+[English](https://github.com/go-ego/gse/blob/master/README.md) | [简体中文](https://github.com/go-ego/gse/blob/master/README_zh.md)
+
 Gse は jieba の Golang 実装であり、NLP サポートやより多くの機能を追加することを目指しています。
 
-I build [Codg]("https://github.com/vcaesar/codg") now, Easy code and work AI agent system: auto, asynchronous, concurrency, efficiently
+現在 [Codg](https://github.com/vcaesar/codg) を開発中です。手軽にコーディングと作業ができる AI エージェントシステム：自動、非同期、並行、効率的かつ高精度
 
 <p align="center">
 <a href="https://github.com/vcaesar/codg" rel="nofollow">

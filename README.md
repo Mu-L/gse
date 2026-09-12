@@ -1,7 +1,7 @@
 # gse
 
 Go efficient multilingual NLP and text segmentation; support English, Chinese, Japanese and others.
-And supports with [elasticsearch](https://github.com/vcaesar/go-gse-elastic) and [bleve](https://github.com/vcaesar/gse-bleve).
+And supports with [riot](https://github.com/vcaesar/riot), [zincsearch](https://github.com/zincsearch/zincsearch), [elasticsearch](https://github.com/vcaesar/go-gse-elastic) and [bleve](https://github.com/vcaesar/gse-bleve).
 
 <!--<img align="right" src="https://raw.githubusercontent.com/go-ego/ego/master/logo.jpg">-->
 <!--<a href="https://circleci.com/gh/go-ego/ego/tree/dev"><img src="https://img.shields.io/circleci/project/go-ego/ego/dev.svg" alt="Build Status"></a>-->
@@ -19,7 +19,7 @@ And supports with [elasticsearch](https://github.com/vcaesar/go-gse-elastic) and
 
 [简体中文](https://github.com/go-ego/gse/blob/master/README_zh.md) | [日本語](https://github.com/go-ego/gse/blob/master/README_ja.md)
 
-Gse is implements jieba by golang, and try add NLP support and more feature
+Gse is implements jieba by golang, and add NLP support and more features
 
 I build [Codg](https://github.com/vcaesar/codg) now, Easy code and work AI agent system: auto, asynchronous, concurrency, efficiently and High accuracy
 
